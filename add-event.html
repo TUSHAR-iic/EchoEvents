@@ -12,9 +12,7 @@
     <div class="logo">EchoEvents</div>
     <ul class="navbar-links">
       <li><a href="index.html">Home</a></li>
-      <li><a href="#login">Login</a></li>
       <li><a href="#events">Events</a></li>
-      <li><a href="#review">Review</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
     <button class="sign-in">Sign In</button>
@@ -54,6 +52,8 @@
         <option value="Offline">Offline</option>
       </select>
 
+      <label for="event-image">Upload Event Image (Max 10MB):</label>
+      <input type="file" id="event-image" accept="image/*" required>
       <button type="submit">Add Event</button>
     </form>
   </section>
@@ -78,16 +78,40 @@
       const eventDate = document.getElementById('event-date').value;
       const eventTime = document.getElementById('event-time').value;
       const eventMode = document.getElementById('event-mode').value;
-  
-      const eventData = { eventType, eventName, eventDate, eventTime, eventMode };
-  
-      let events = JSON.parse(localStorage.getItem('events')) || [];
-      events.push(eventData);
-      localStorage.setItem('events', JSON.stringify(events));
-  
-      alert('Event added successfully!');
-      window.location.href = 'index.html';
+      const eventImageInput = document.getElementById('event-image');
+
+      // Ensure an image is uploaded and validate its size
+      if (eventImageInput.files.length === 0) {
+        alert("Please upload an image.");
+        return;
+      }
+
+      const eventImageFile = eventImageInput.files[0];
+      if (eventImageFile.size > 10 * 1024 * 1024) {
+        alert("Image size should not exceed 10MB.");
+        return;
+      }
+
+      // Convert the image to Base64
+      const reader = new FileReader();
+      reader.onload = function () {
+        const eventImage = reader.result;
+
+        // Create an event object
+        const eventData = { eventType, eventName, eventDate, eventTime, eventMode, eventImage };
+
+        // Store the event in localStorage
+        let events = JSON.parse(localStorage.getItem('events')) || [];
+        events.push(eventData);
+        localStorage.setItem('events', JSON.stringify(events));
+
+        alert('Event added successfully!');
+        window.location.href = 'index.html';
+      };
+
+      reader.readAsDataURL(eventImageFile);
     });
+    
   </script>
   
 </body>
