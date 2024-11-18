@@ -115,7 +115,7 @@ h2 {
 
 /* Featured Events Section */
 .featured-events {
-  padding: 50px 20px;
+  padding: 100px 20px;
   background-color: white;
 }
 
@@ -193,7 +193,7 @@ h2 {
 
 /* notification */
 .new-events-week {
-  padding: 20px;
+  padding: 50px 20px;
   background-color: #ffffff;
   text-align: center;
 }

@@ -5,6 +5,83 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Add Your Event</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    
+  .add-event {
+    background: rgba(255, 255, 255, 0.3); /* Transparent white background */
+    border-radius: 10px;
+    padding: 30px;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px); /* Blurs the background for a cool effect */
+    margin-top: 100px;
+   margin-left:400px;
+  }
+  
+  h2 {
+    text-align: center;
+    color: #0c172f;
+    font-size: 28px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  label {
+    color: #092a64;
+    margin-bottom: 5px;
+    font-size: 14px;
+  }
+  
+  select, input[type="text"], input[type="date"], input[type="time"], input[type="file"] {
+    background: rgba(211, 209, 209, 0.4);
+    color: #0c172f;
+    border: 1px solid rgba(255,255,255, 0.5);
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    font-size: 14px;
+  }
+  
+  input[type="file"] {
+    padding: 10px;
+  }
+  
+  button[type="submit"] {
+    background: #97053d;
+    color: #fff;
+    border: none;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  
+  button[type="submit"]:hover {
+    background: #cf0754;
+  }
+  
+  #other-type-container {
+    margin-bottom: 20px;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .add-event {
+      padding: 20px;
+      width: 90%;
+    }
+  
+    h2 {
+      font-size: 24px;
+    }
+  }</style>
 </head>
 <body>
   <!-- Header -->
