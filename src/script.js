@@ -64,6 +64,35 @@ const eventsGrid = document.getElementById('events-grid');
   }
 
     }
+    // Add event listeners to genre buttons
+// Add event listeners to genre buttons
+document.querySelectorAll('.genre-btn').forEach((button) => {
+  button.addEventListener('click', () => {
+    const selectedGenre = button.getAttribute('data-genre');
+    const eventCards = document.querySelectorAll('.event-card');
+    const filteredEventsContainer = document.getElementById('filtered-events');
+
+    // Clear previous filtered results
+    filteredEventsContainer.innerHTML = '';
+
+    eventCards.forEach((card) => {
+      const eventTag = card.querySelector('.event-tag').textContent;
+
+      // If genre matches or "All" is selected, clone and display the event card
+      if (selectedGenre === 'All' || eventTag === selectedGenre) {
+        const clonedCard = card.cloneNode(true);
+        filteredEventsContainer.appendChild(clonedCard);
+      }
+    });
+
+    // If no matching events, display a message
+    if (!filteredEventsContainer.hasChildNodes()) {
+      filteredEventsContainer.innerHTML = '<p>No events found for this genre.</p>';
+    }
+  });
+});
+
+
 
     // Load events when the page loads
     window.onload = loadEvents;
@@ -98,4 +127,3 @@ function deleteEvent(index) {
   
   // Load events when the page loads
   window.onload = loadEvents;
-  
