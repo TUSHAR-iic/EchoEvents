@@ -127,3 +127,19 @@ function deleteEvent(index) {
   // Load events when the page loads
   window.onload = loadEvents;
   
+
+  function smoothScroll(linkId, targetId) {
+    const link = document.getElementById(linkId);
+    const target = document.getElementById(targetId);
+  
+    link.addEventListener('click', (e) => {
+      e.preventDefault(); // Prevent default behavior
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+  
+  // Use the function for the links
+  smoothScroll('events-link', 'events-grid');       // Events
+  smoothScroll('contact-link', 'footer');          // Contact
+  smoothScroll('review-link', 'review-section');   // Review
+  
