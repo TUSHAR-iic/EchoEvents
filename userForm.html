@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Event Submission</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Reuse styles from add-event.html */
+    body{
+        background-image: url(public/3433076.jpg);
+
+    }
+    .user-form {
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 10px;
+      padding: 30px;
+      width: 100%;
+      max-width: 600px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(10px);
+      margin: 100px auto;
+    }
+
+    h2 {
+      text-align: center;
+      color: #e6e0e2;
+      font-size: 28px;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      color: #01040a;
+      margin-bottom: 5px;
+      font-size: 14px;
+    }
+
+    input, select, button {
+      background: rgba(211, 209, 209, 0.4);
+      color: #0c172f;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      padding: 10px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+
+    button {
+      background: #97053d;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #cf0754;
+    }
+  </style>
+</head>
+<body>
+  <section class="user-form">
+    <h2>Submit Your Event</h2>
+    <form id="user-event-form">
+      <label for="event-type">Event Type:</label>
+      <select id="event-type" required>
+        <option value="Cultural">Cultural</option>
+        <option value="Music">Music</option>
+        <option value="Dancing">Dancing</option>
+        <option value="Fest">Fest</option>
+        <option value="Departmental">Departmental</option>
+        <option value="Hostel">Hostel</option>
+        <option value="Other">Other</option>
+      </select>
+
+      <label for="event-name">Event Name:</label>
+      <input type="text" id="event-name" required>
+
+      <label for="event-date">Date:</label>
+      <input type="date" id="event-date" required>
+
+      <label for="event-time">Time:</label>
+      <input type="time" id="event-time" required>
+
+      <label for="event-mode">Mode:</label>
+      <select id="event-mode" required>
+        <option value="Online">Online</option>
+        <option value="Offline">Offline</option>
+      </select>
+
+      <label for="event-image">Upload Event Image:</label>
+      <input type="file" id="event-image" accept="image/*" required>
+
+      <button type="submit">Submit Event</button>
+    </form>
+  </section>
+
+  <script>
+    const eventForm = document.getElementById('user-event-form');
+
+    eventForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      // Collect form data
+      const eventType = document.getElementById('event-type').value;
+      const eventName = document.getElementById('event-name').value;
+      const eventDate = document.getElementById('event-date').value;
+      const eventTime = document.getElementById('event-time').value;
+      const eventMode = document.getElementById('event-mode').value;
+      const eventImageInput = document.getElementById('event-image');
+
+      if (eventImageInput.files.length === 0) {
+        alert("Please upload an image.");
+        return;
+      }
+
+      const eventImageFile = eventImageInput.files[0];
+      const reader = new FileReader();
+
+      reader.onload = function () {
+        const eventImage = reader.result;
+
+        // Prepare event data
+        const userEventData = {
+          eventType,
+          eventName,
+          eventDate,
+          eventTime,
+          eventMode,
+          eventImage,
+          submittedAt: new Date().toLocaleString(),
+        };
+
+        // Save the event data as a notification
+        let userNotifications = JSON.parse(localStorage.getItem('userNotifications')) || [];
+        userNotifications.push(userEventData);
+        localStorage.setItem('userNotifications', JSON.stringify(userNotifications));
+
+        alert("Your event has been submitted!");
+        window.location.href = 'index.html';
+      };
+
+      reader.readAsDataURL(eventImageFile);
+    });
+  </script>
+</body>
+</html>

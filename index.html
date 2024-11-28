@@ -85,7 +85,7 @@
    <section class="add-event-section">
     <h2>Have an Event to Share?</h2>
     <p>Contribute to our community by adding your own event. It's simple and quick!</p>
-    <button class="add-event-btn" onclick="addEvent()">ADD YOUR OWN EVENT</button>
+    <button class="add-event-btn" onclick="handleAddEvent()">ADD YOUR OWN EVENT</button>
   </section>
 
    <!-- Footer Section -->
@@ -121,9 +121,19 @@
    
   </footer>
   <script>
-    function addEvent() {
-      alert("Feature coming soon: Add your event details!");
+    function handleAddEvent() {
+    // Check if the user is logged in (using localStorage as an example)
+    const userType = localStorage.getItem('userType');
+
+    if (userType) {
+      // Redirect to userForm.html if logged in
+      window.location.href = 'userForm.html';
+    } else {
+      // Redirect to login.html if not logged in
+      alert('You must be logged in to add an event.');
+      window.location.href = 'login.html';
     }
+  }
   </script>
   
   <script src="script.js"></script>

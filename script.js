@@ -50,7 +50,7 @@ function loadEvents() {
         <h3>${event.eventName}</h3>
         <p><span>${event.eventDate}</span> | <span>${event.eventTime}</span></p>
         <p>${event.eventMode}</p>
-        <button>BUY NOW</button>
+        <button>DOWNLOAD INFO</button>
         ${userType === 'admin' ? `<button class="delete-event" data-index="${index}">Delete</button>` : ''}
       </div>
     `;
@@ -67,6 +67,23 @@ function loadEvents() {
       });
     });
   }
+}
+
+
+function enableImageDownload() {
+  document.querySelectorAll('.event-card').forEach((card) => {
+    const downloadButton = card.querySelector('button');
+    const image = card.querySelector('img');
+
+    downloadButton.addEventListener('click', () => {
+      const imageUrl = image.src; // Get the image source URL
+      const link = document.createElement('a'); // Create a temporary anchor element
+      link.href = imageUrl; // Set the href to the image URL
+      link.download = image.alt || 'event-image'; // Set the download attribute to the image's alt text or default name
+      link.click(); // Programmatically click the link to trigger the download
+      link.remove(); // Clean up the link element
+    });
+  });
 }
 // Add event listeners to genre buttons
 document.querySelectorAll('.genre-btn').forEach((button) => {
@@ -125,7 +142,10 @@ function deleteEvent(index) {
 
   
   // Load events when the page loads
-  window.onload = loadEvents;
+  window.onload = () => {
+    loadEvents(); // Load events
+    enableImageDownload(); // Enable image download functionality
+  };
   
 
   function smoothScroll(linkId, targetId) {

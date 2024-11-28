@@ -1,0 +1,59 @@
+class Stack():
+    Arraylist = []  # Empty array
+
+    # To check if the Stack is empty or not
+    def is_empty(self):
+        return len(self.Arraylist) == 0
+
+    # Push function to Push an element in Stack
+    def push(self, Data):
+        self.Arraylist.append(Data)
+
+    # Pop function to Pop an element from Stack
+    def pop(self):
+        if self.is_empty():
+            print("The Stack is Underflow, No element to be popped")
+            return
+        popped = self.Arraylist.pop()
+        print(f"Popped {popped} from the Stack")
+        return popped
+
+    # Traverse function to peek top element in Stack
+    def traverse(self):
+        if self.is_empty():
+            print("The Stack is empty")
+            return None
+        val = self.Arraylist[len(self.Arraylist)-1]
+        print(f"Top element is {val}")
+        return val
+
+    # Function to push element at the bottom of the stack
+    def pushatBottom(self, Data):
+        if self.is_empty():
+            self.push(Data)
+            return
+
+        # Pop the top element and recurse
+        top = self.pop()
+        self.pushatBottom(Data)
+        
+        # Push the popped element back
+        self.push(top)
+        
+if __name__ == "__main__":
+    s = Stack()
+    s.push(10)
+    s.push(20)
+    s.push(30)
+    
+    
+    # Push element at the bottom of the stack
+    s.pushatBottom(40)
+    print("After inserting")
+    while s.is_empty()==0:
+        
+        s.pop()
+
+    
+    
+   
