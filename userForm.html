@@ -102,50 +102,51 @@
   <script>
     const eventForm = document.getElementById('user-event-form');
 
-    eventForm.addEventListener('submit', (e) => {
+    eventForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-
-      // Collect form data
+  
       const eventType = document.getElementById('event-type').value;
       const eventName = document.getElementById('event-name').value;
       const eventDate = document.getElementById('event-date').value;
       const eventTime = document.getElementById('event-time').value;
       const eventMode = document.getElementById('event-mode').value;
       const eventImageInput = document.getElementById('event-image');
-
+  
       if (eventImageInput.files.length === 0) {
-        alert("Please upload an image.");
-        return;
+          alert("Please upload an image.");
+          return;
       }
-
+  
       const eventImageFile = eventImageInput.files[0];
       const reader = new FileReader();
-
-      reader.onload = function () {
-        const eventImage = reader.result;
-
-        // Prepare event data
-        const userEventData = {
-          eventType,
-          eventName,
-          eventDate,
-          eventTime,
-          eventMode,
-          eventImage,
-          submittedAt: new Date().toLocaleString(),
-        };
-
-        // Save the event data as a notification
-        let userNotifications = JSON.parse(localStorage.getItem('userNotifications')) || [];
-        userNotifications.push(userEventData);
-        localStorage.setItem('userNotifications', JSON.stringify(userNotifications));
-
-        alert("Your event has been submitted!");
-        window.location.href = 'index.html';
+  
+      reader.onload = async function () {
+          const eventImage = reader.result;
+  
+          const eventData = { eventType, eventName, eventDate, eventTime, eventMode, eventImage };
+  
+          try {
+              const response = await fetch('/submit-event', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify(eventData),
+              });
+  
+              if (response.ok) {
+                  alert("Event submitted successfully!");
+                  window.location.href = 'index.html';
+              } else {
+                  const errorText = await response.text();
+                  alert(`Failed to submit event: ${errorText}`);
+              }
+          } catch (error) {
+              console.error("Error submitting event:", error);
+              alert("An error occurred while submitting your event.");
+          }
       };
-
+  
       reader.readAsDataURL(eventImageFile);
-    });
+  });
   </script>
 </body>
 </html>

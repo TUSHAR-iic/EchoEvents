@@ -51,10 +51,44 @@ const reviewSchema = new mongoose.Schema({
         default: Date.now,
     },
 });
+
+const eventSchema = new mongoose.Schema({
+    eventType: {
+        type: String,
+        required: true,
+    },
+    eventName: {
+        type: String,
+        required: true,
+    },
+    eventDate: {
+        type: Date,
+        required: true,
+    },
+    eventTime: {
+        type: String,
+        required: true,
+    },
+    eventMode: {
+        type: String,
+        required: true,
+    },
+    eventImage: {
+        type: String, // Base64 image or file path
+        required: true,
+    },
+    submittedAt: {
+        type: Date,
+        default: Date.now,
+    },
+});
+
+const EventCollection = mongoose.model('EventCollection', eventSchema);
+
 const LogInCollection=new mongoose.model('LogInCollection',logInSchema)
 
 const ContactMessage = mongoose.model('ContactMessage', contactMessageSchema);
 
 const ReviewCollection = mongoose.model('ReviewCollection', reviewSchema);
 
-module.exports = { LogInCollection, ContactMessage,ReviewCollection };
+module.exports = { LogInCollection, ContactMessage, ReviewCollection, EventCollection };

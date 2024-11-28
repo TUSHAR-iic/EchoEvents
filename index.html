@@ -85,8 +85,9 @@
    <section class="add-event-section">
     <h2>Have an Event to Share?</h2>
     <p>Contribute to our community by adding your own event. It's simple and quick!</p>
-    <button class="add-event-btn" onclick="handleAddEvent()">ADD YOUR OWN EVENT</button>
+    <a href="userForm.html" class="add-event-btn">ADD YOUR OWN EVENT</a>
   </section>
+  
 
    <!-- Footer Section -->
    <footer class="footer"  id="footer">
@@ -120,23 +121,33 @@
     <!-- Divider and Logo -->
    
   </footer>
+  <button onclick="simulateLogin()">Simulate Login</button>
+
   <script>
-    function handleAddEvent() {
-    // Check if the user is logged in (using localStorage as an example)
+    // Function to simulate login
+  function simulateLogin() {
+    localStorage.setItem('userType', 'loggedInUser');
+    alert('Login simulated!');
+  }
+
+  // Function to test redirection
+  function testRedirection() {
     const userType = localStorage.getItem('userType');
+    console.log('userType:', userType);
 
     if (userType) {
-      // Redirect to userForm.html if logged in
+      alert('User is logged in. Redirecting...');
       window.location.href = 'userForm.html';
     } else {
-      // Redirect to login.html if not logged in
-      alert('You must be logged in to add an event.');
+      alert('User is not logged in. Redirecting to login...');
       window.location.href = 'login.html';
     }
   }
   </script>
   
   <script src="script.js"></script>
+  <button onclick="simulateLogin()">Simulate Login</button>
+<button onclick="testRedirection()">Test Add Event</button>
 </body>
 </html>
 

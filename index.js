@@ -1,12 +1,12 @@
 const express = require("express");
 const path = require("path");
 const app = express();
-const { LogInCollection, ContactMessage,ReviewCollection} = require("./mongodb");
+const { LogInCollection, ContactMessage,ReviewCollection,EventCollection} = require("./mongodb");
 const port = process.env.PORT || 4000;
 
 // Middleware to parse JSON and URL-encoded data
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 
 // Serve static files (like login.html, signup.html, and index.html)
 app.use(express.static(path.join(__dirname)));
@@ -125,6 +125,28 @@ app.post("/review", async (req, res) => {
     } catch (error) {
         console.error("Error saving review:", error);
         res.status(500).send("An error occurred while submitting your review.");
+    }
+});
+
+// Handle event form submission
+app.post("/submit-event", async (req, res) => {
+    const { eventType, eventName, eventDate, eventTime, eventMode, eventImage } = req.body;
+
+    // Validate form data
+    if (!eventType || !eventName || !eventDate || !eventTime || !eventMode || !eventImage) {
+        return res.status(400).send("All fields are required.");
+    }
+
+    try {
+        // Save event data to the database
+        const newEvent = new EventCollection({ eventType, eventName, eventDate, eventTime, eventMode, eventImage });
+        await newEvent.save();
+
+        console.log("New event registered:", newEvent);
+        res.status(201).send("Event submitted successfully!");
+    } catch (error) {
+        console.error("Error saving event:", error.message);
+        res.status(500).send("An error occurred while submitting the event.");
     }
 });
 
