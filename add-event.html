@@ -136,11 +136,17 @@
   </section>
 
   <script>
-    const userType = localStorage.getItem('userType');
-    if (!userType) {
-      alert('Please log in to add an event.');
-      window.location.href = 'login.html';
-    }
+    // Check userType in cookies instead of localStorage
+const userType = document.cookie
+.split('; ')
+.find((row) => row.startsWith('userType='))
+?.split('=')[1];
+
+if (userType !== 'admin') {
+alert('Access denied. Please log in as admin.');
+window.location.href = 'login.html';
+}
+
   
     const eventForm = document.getElementById('event-form');
   
